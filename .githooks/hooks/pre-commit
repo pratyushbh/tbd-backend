@@ -1,0 +1,17 @@
+#!/bin/sh
+
+echo "🔍 Running golangci-lint..."
+
+# Run the linter
+make lint
+
+# Capture the exit code of the linter
+EXIT_CODE=$?
+
+if [ $EXIT_CODE -ne 0 ]; then
+    echo "❌ Linter failed! Commit aborted. Please fix the issues above."
+    exit $EXIT_CODE
+fi
+
+echo "✅ Linter passed! Proceeding with commit."
+exit 0

@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# Get the commit message file path from Git's argument
+COMMIT_MSG_FILE=$1
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+# Regex to enforce: [#PR_ID] service-name: message
+# Example: [#123] auth-service: add login endpoint
+COMMIT_REGEX="^\[[0-9]+\] [a-zA-Z0-9_-]+: .+$"
+
+# Allow merge commits or pull requests to pass without checking
+if [[ "$COMMIT_MSG" =~ ^Merge ]]; then
+    exit 0
+fi
+
+if [[ ! "$COMMIT_MSG" =~ $COMMIT_REGEX ]]; then
+    echo "================================================================"
+    echo "❌ ERROR: Invalid commit message format!"
+    echo "================================================================"
+    echo "Your message: '$COMMIT_MSG'"
+    echo ""
+    echo "Expected format:"
+    echo "  [<PR_ID>] <service-name>: <description>"
+    echo ""
+    echo "Example:"
+    echo "  [104] auth-service: fixed token expiration bug"
+    echo "================================================================"
+    exit 1
+fi
+
+echo "✅ Commit message format passed validation."
+exit 0

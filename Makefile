@@ -4,7 +4,7 @@ LOCALBIN = $(shell pwd)/.bin
 # Define the linter binary path
 GOLANGCI_LINT = $(LOCALBIN)/golangci-lint
 
-.PHONY: all lint lint-fix clean
+.PHONY: all lint lint-fix clean setup-hooks
 
 all: lint
 
@@ -24,12 +24,13 @@ $(GOLANGCI_LINT):
 	@mkdir -p $(LOCALBIN)
 	GOBIN=$(LOCALBIN) go install github.com/golangci/golangci-lint/cmd/golangci-lint
 
+# This configures the developer's local Git to use the tracked hooks folder
 setup-hooks:
-	@echo "==> Configuring Git hooks path..."
-	git config core.hooksPath .git/hooks
-	@chmod +x .git/hooks/commit-msg
-	@chmod +x .git/hooks/pre-push
-	@echo "✅ Git hooks configured successfully."
+	@echo "==> Configuring Git hooks..."
+	git config core.hooksPath .githooks/hooks
+	@chmod +x .githooks/hooks/commit-msg
+	@chmod +x .githooks/hooks/pre-push
+	@echo "✅ Git hooks are now active!"
 
 # Clean up local binaries
 clean:
