@@ -24,6 +24,13 @@ $(GOLANGCI_LINT):
 	@mkdir -p $(LOCALBIN)
 	GOBIN=$(LOCALBIN) go install github.com/golangci/golangci-lint/cmd/golangci-lint
 
+setup-hooks:
+	@echo "==> Configuring Git hooks path..."
+	git config core.hooksPath .git/hooks
+	@chmod +x .git/hooks/commit-msg
+	@chmod +x .git/hooks/pre-push
+	@echo "✅ Git hooks configured successfully."
+
 # Clean up local binaries
 clean:
 	rm -rf $(LOCALBIN)
