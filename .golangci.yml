@@ -1,0 +1,18 @@
+run:
+  timeout: 5m
+
+linters:
+  disable-all: true 
+  enable:
+    - govet
+    - staticcheck
+    - gocritic
+
+linters-settings:
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - style
+      - performance
+    disabled-checks:
+      - unnamedResult

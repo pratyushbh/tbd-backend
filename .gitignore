@@ -1,0 +1,6 @@
+#Env Files
+*.env
+
+#folders
+build/
+.bin/
