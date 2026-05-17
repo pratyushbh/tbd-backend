@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Get the current branch name
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# Block pushes if the current branch is master
+if [ "$CURRENT_BRANCH" = "master" ]; then
+    echo "================================================================"
+    echo "❌ ERROR: Direct pushes to 'master' are disabled!"
+    echo "================================================================"
+    echo "Please create a feature branch, commit your changes there,"
+    echo "and push that branch to open a Pull Request."
+    echo "================================================================"
+    exit 1
+fi
+
+exit 0
